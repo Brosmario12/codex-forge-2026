@@ -1,0 +1,1 @@
+-- Remote baseline migration already present in the linked Supabase project.
