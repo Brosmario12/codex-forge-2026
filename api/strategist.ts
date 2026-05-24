@@ -41,14 +41,19 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
 
   const brief = req.body as Brief
 
-  if (!process.env.OPENAI_API_KEY) {
+  const apiKey = process.env.OPENAI_API_KEY?.replace(
+    /[\uFEFF\u200B-\u200D\u2060]/g,
+    '',
+  ).trim()
+
+  if (!apiKey) {
     return res.status(200).json({
       mode: 'demo',
       strategy: fallbackStrategy(brief),
     })
   }
 
-  const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+  const client = new OpenAI({ apiKey })
 
   const response = await client.responses.create({
     model: process.env.OPENAI_MODEL || 'gpt-5.4-mini',
