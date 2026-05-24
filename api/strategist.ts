@@ -1,5 +1,9 @@
 import OpenAI from 'openai'
 
+declare const process: {
+  env: Record<string, string | undefined>
+}
+
 type Brief = {
   company?: string
   audience?: string
